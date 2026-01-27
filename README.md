@@ -1,2 +1,2 @@
 # visual-systems-logbook
-aa
+Logbook covering labs from the Design of Visual Systems module
