@@ -63,17 +63,32 @@ Check the dimension of _f_ on the right window pane of Matlab. Examine the image
 f(3,10)             % print the intensity of pixel(3,10)
 imshow(f(1:241,:))  % display only top half of the image
 ```
-Indices of 2D matrix in Matlab is of the format: (row, column).  You can use *_':'_* to *_slice_* the data.  *_(1:241 , : )_* means only rows 1 to 241 and all columns are used.  The default is the entire matrix.
+output:
+```
+ans = uint8
+28
+```
+
+<img width="740" height="380" alt="image" src="https://github.com/user-attachments/assets/4f760543-6ecc-4bdd-881d-5ce98829cd88" />
+
 
 To find the maximum and minimum intensity values of the image, do this:
 ```
 [fmin, fmax] = bounds(f(:))
 ```
-*_bounds_* returns the maximum and minimum values in the entire image f. The index ( : ) means every columns. If this is not specified, Matlab will return the max and min values for each column as 2 row vectors.
-
-Since the data type for _f_ is _uint8_, the full intensity range is [0 255].  Is the intensity of _f_ close to the full range?
-
+output:
+```
+fmin = uint8
+21
+fmax = uint8
+255
+```
 **Test yourself**: Display the right half of the image. Capture it for your logbook.
+
+```
+imshow(f(:,241:482))
+```
+<img width="500" height="710" alt="image" src="https://github.com/user-attachments/assets/27e6d6ca-d117-4641-9f4f-ec2753ca349b" />
 
 ### Negative image
 
@@ -84,9 +99,7 @@ g1 = imadjust(f, [0 1], [1 0])
 figure              % open a new figure window
 montage({f, g1})
 ```
->The 2nd parameter of _imadjust_ is in the form of [low_in high_in], where the values are between 0 and 1.  [0 1] means that the input image is to be adjusted to within 1% of the bottom and top pixel values.  
-
->The 3rd parameter is also in the form of [low_out high_out]. It specifies how the input range is mapped to output range.  So, [1 0] means that the lowest pixel intensity of the input is now mapped to highest pixel intensity at the output and vice versa.  This of course means that all intensities are inverted, producing the negative image.  The same thing can be achieved using _function imcomplement_.
+<img width="935" height="543" alt="image" src="https://github.com/user-attachments/assets/cf9504e0-88fb-47d6-bae3-3014fccfc93a" />
 
 ### Gamma correction
 
@@ -97,11 +110,15 @@ g3 = imadjust(f, [ ], [ ], 2);
 figure
 montage({g2,g3})
 ```
+
+<img width="935" height="543" alt="image" src="https://github.com/user-attachments/assets/2ff05d0b-436d-4ed8-9e63-17d1eb3fdfb4" />
+
 _g2_ has the gray scale range between 0.5 and 0.75 mapped to the full range.
 
 _g3_ uses gamma correct with gamma = 2.0 as shown in the diagram below. [ ] is the same as [0 1] by default.
 
-<p align="center"> <img src="assets/gamma.jpg" /> </p><BR>
+<img width="452" height="402" alt="image" src="https://github.com/user-attachments/assets/2324d559-4565-4bd4-86d8-ae297eb47ddf" />
+
 
 This produces a result similar to that of g2 by compressing the low end and expanding the high end of the gray scale.  It however, unlike g2,  retains more of the details because the intensity now covers the entire gray scale range.  _function montage_ stitches together images in the list specified within { }.
 
@@ -109,7 +126,8 @@ This produces a result similar to that of g2 by compressing the low end and expa
 
 Instead of using the *_imadjust function_*, we will apply the constrast stretching transformation function in Lecture 4 slide 4 to improve the contrast of another X-ray image.  The transformation function is as shown here:
 
-<p align="center"> <img src="assets/stretch.jpg" /> </p><BR>
+<img width="429" height="387" alt="image" src="https://github.com/user-attachments/assets/906dcb04-8d54-461e-a39c-0b7c62aaed62" />
+
 
 The equation of this function is:
 
@@ -136,6 +154,9 @@ The intensity values of s are normalized to the range of [0.0 1.0] and is in typ
 
 Discuss the results with your classmates and record your observations in your logbook.
 
+<img width="905" height="1255" alt="image" src="https://github.com/user-attachments/assets/5461a2c5-7d4a-41f0-976f-d1c90976698f" />
+
+Contrast in the image has improved making it easier to see tissue and other features
 ## Task 3: Contrast Enhancement using Histogram
 
 ### PLotting the histogram of an image
