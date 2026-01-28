@@ -171,6 +171,10 @@ imshow(f)
 figure          % open a new figure window
 imhist(f);      % calculate and plot the histogram
 ```
+output:
+<img width="758" height="639" alt="image" src="https://github.com/user-attachments/assets/48acd35f-1fe4-4b5a-bfee-b76f8b141f55" />
+<img width="905" height="679" alt="image" src="https://github.com/user-attachments/assets/a26ef91e-afaa-46f8-9f1b-1d826091fe60" />
+
 It is clear that the intesity level of this image is very much squashed up between 70 to 140 in the range [0 255].  One attempt is to stretch the intensity between 0.3 and 0.55 of full scale (i.e. 255) with the built-in function _imadjust_ from the previous tasks. Try this:
 
 ```
@@ -180,6 +184,12 @@ montage({f, g})     % display list of images side-by-side
 figure
 imhist(g);
 ```
+output:
+
+<img width="905" height="459" alt="image" src="https://github.com/user-attachments/assets/98e52094-d95a-4f76-a38e-a4f84bee89e9" />
+<img width="905" height="679" alt="image" src="https://github.com/user-attachments/assets/4a30bd9c-5904-45a4-9333-773e6d9abb8f" />
+
+
 The histogram of the adjusted image is more spread out.  It is definitely an improvement but it is still not a good image.
 
 ### Histogram, PDF and CDF
@@ -196,6 +206,9 @@ plot(g_pdf)
 subplot(1,2,2)                  % plot 2 in a 1x2 subplot
 plot(g_cdf)
 ```
+output:
+<img width="758" height="639" alt="image" src="https://github.com/user-attachments/assets/231f99f7-3317-4454-9a2f-1800ba9a0767" />
+<img width="758" height="639" alt="image" src="https://github.com/user-attachments/assets/ce0e63bd-ac03-492a-9b28-900ea435abeb" />
 
 ### Histogram Equalization
 
@@ -213,6 +226,9 @@ xlabel('Input intensity values', 'fontsize', 9)
 ylabel('Output intensity values', 'fontsize', 9)
 title('Transformation function', 'fontsize', 12)
 ```
+output:
+<img width="935" height="702" alt="image" src="https://github.com/user-attachments/assets/4df8dd47-d723-407c-aad0-27cf26458a57" />
+
 
 The Matlab function _histeq_ computes the CDF of an image, and use this as the intensity transformation function to flatten the histogram.  The following code will perform this function and provide plots of all three images and their histogram.
 
@@ -225,6 +241,9 @@ subplot(1,3,1); imhist(f);
 subplot(1,3,2); imhist(g);
 subplot(1,3,3); imhist(h);
 ```
+output:
+<img width="905" height="833" alt="image" src="https://github.com/user-attachments/assets/dbb97c15-d087-484c-a783-3fa0a8be1522" />
+<img width="905" height="679" alt="image" src="https://github.com/user-attachments/assets/9543cc4d-4a5a-4008-9b81-dcd01a45de57" />
 
 ## Task 4 - Noise reduction with lowpass filter
 
@@ -242,6 +261,8 @@ close all
 f = imread('assets/noisyPCB.jpg');
 imshow(f)
 ```
+<img width="935" height="817" alt="image" src="https://github.com/user-attachments/assets/7d917658-c49c-407c-900d-62df6eea70ab" />
+
 The image is littered with noise which is clearly visible.  We shall attempt to reduce the noise by using Box and the Gaussian filters.
 
 Use the function _fspecial_ to produce a 9x9 averaging filter kernel _ and a 7 x 7 Gaussian kernel with sigma = 0.5  as shown below:
@@ -259,9 +280,10 @@ g_gauss = imfilter(f, w_gauss, 0);
 figure
 montage({f, g_box, g_gauss})
 ```
-Comment on the results.  
+<img width="852" height="1279" alt="image" src="https://github.com/user-attachments/assets/ccc1ad8c-910c-4d56-a086-50367c2b09eb" />
 
->Test yourself: Explore various kernel size and sigma value for these two filters. Comment on the trade-off between the choice of these parameters and the effect on the image.
+Comment on the results.  
+with the 9x9 filter the noise is reduced but the image appears blured and it lacks sharpness, the 7x7 image appears clearer but some noise is still visable. A larger Kernel size reduces noise but increases blur
 
 ## Task 5 - Median Filtering
 
@@ -272,7 +294,10 @@ Try this:
 g_median = medfilt2(f, [7 7], 'zero');
 figure; montage({f, g_median})
 ```
+<img width="935" height="459" alt="image" src="https://github.com/user-attachments/assets/8f68c50f-8561-47bd-9a1c-2973d29888fe" />
+
 Comment on the results.
+More noise is reduced from the gaussian filter with edges appearing to be sharper
 
 ## Task 6 - Sharpening the image with Laplacian, Sobel and Unsharp filters
 
