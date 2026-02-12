@@ -84,13 +84,52 @@ In this task, you will explore the effect of using Open and Close on a binary no
 5. Open _f_ to produce _fo_.
 6. Show _f_, _fe_, _fed_ and _fo_ as a 4 image montage.
 
-Comment on the the results.
+```
+clear all
+close all
+f = imread('fingerprint-noisy.tif');
+SE = strel('square',3);
+fe = imerode(f, SE);
+fed = imdilate(fe, SE);
+fo = imopen(f, SE);
+montage({f, fe, fed, fo});
+```
+<img width="905" height="658" alt="image" src="https://github.com/user-attachments/assets/2c9562f6-6cab-4c99-935a-39e8f9c16a56" />
 
-Explore what happens with other size and shape of structuring element.
+> Comment on the the results.
 
-Improve the image _fo_ with a close operation.
+Note: f: fingerprint has noise surrounding fingerprint with breaks and holes within the fingerprint
+fe: ridges are thinner however noise has been removed, more gaps in the ridges now
+fed: ridge thickness returns without noise that was removed by erosion. Gaps in ridges are filled back in
+fo: is very similar to fed
 
-Finally, compare morphological filtering using Open + Close to spatial filter with a **Gaussian filter**. Comment on your comparison.
+> Explore what happens with other size and shape of structuring element.
+
+Larger SE: removes more fingerprint details and very large SE's remove fingerprint entirely
+Disk/square: disk has rounder smoothing than square
+
+> Improve the image _fo_ with a close operation.
+
+```
+fcl = imclose(fo, SE);
+```
+Breaks in the fingerprint ridges are repaired
+
+> Finally, compare morphological filtering using Open + Close to spatial filter with a **Gaussian filter**. Comment on your comparison.
+
+```
+f = imread('fingerprint-noisy.tif');
+SE = strel('square',3);
+fo = imopen(f, SE);
+fcl = imclose(fo, SE);
+w_gauss = fspecial('Gaussian', [7 7], 1.0)
+g_gauss = imfilter(f, w_gauss, 0);
+montage({f,fcl,g_gauss});
+```
+<img width="905" height="658" alt="image" src="https://github.com/user-attachments/assets/e7a990f5-56da-45fe-8eae-8fc1f4750493" />
+
+Notes: Gaussian removes some noise however not all of it, the ridges on the fingerprint are smoother however overall there is a loss of detail. 
+Morphological method is superior with a sharper image with less noise and better image retention. 
 
 ## Task 3 - Boundary detection 
 
