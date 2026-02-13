@@ -303,6 +303,45 @@ More noise is reduced from the gaussian filter with edges appearing to be sharpe
 
 Now that you are familiar with the Matlab functions _fspecial_ and _imfilter_, explore with various filter kernels to sharpen the moon image stored in the file _moon.tif_. The goal is to make the moon photo sharper so that the craters can be observed better.
 
+```
+clear; close all; clc
+
+f = imread('moon.tif');
+f = im2double(f);
+
+% Contrast Enhancement
+f_ce = imadjust(f, [], [], 0.9);
+
+% Laplacian sharpening
+w_lap = fspecial('laplacian', 0.2);         
+lap = imfilter(f_ce, w_lap, 0);             
+alpha = 0.5;                                  
+g_lap = f_ce - alpha * lap;
+
+% Sobel sharpening
+w_sobel = fspecial('sobel');
+gx = imfilter(f_ce, w_sobel, 0);
+gy = imfilter(f_ce, w_sobel', 0);
+gradmag = sqrt(gx.^2 + gy.^2);
+k = 0.5;                                     
+g_sobel = f_ce + k * gradmag;
+
+% Unsharp mask
+w_gauss = fspecial('gaussian', [9 9], 2.0);  
+blur = imfilter(f_ce, w_gauss, 0);
+alpha = 1.5;                                
+mask = f_ce - blur;
+g_unsharp = f_ce + alpha * mask;
+
+figure
+montage({f, f_ce, g_lap, g_sobel, g_unsharp})
+title('Original | Contrast-enhanced | Laplacian | Sobel | Unsharp')
+```
+
+<img width="890" height="712" alt="moon" src="https://github.com/user-attachments/assets/a9fe1676-cc5b-464b-9cf2-49d66ad4810f" />
+
+
+
 ## Task 7 - Test yourself Challenges
 
 * Improve the contrast of a lake and tree image store in file _lake&tree.png_ use any technique you have learned in this lab. Compare your results with others in the class.
