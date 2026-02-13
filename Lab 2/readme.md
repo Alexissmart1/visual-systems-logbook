@@ -135,6 +135,9 @@ montage({R, G, B},'Size',[1 3])
 ```
 <img width="1045" height="266" alt="image" src="https://github.com/user-attachments/assets/876700d8-101f-4f39-aaba-9c3a0e90f20d" />
 
+Notes: 
+Image is split into its 3 channels, red, green, and blue colour channels. The data type is uint8, which represents pixel intensities
+
 # Task 12 - Map RGB image to HSV space and into separate channels
 
 ```
@@ -160,5 +163,6 @@ montage({X, Y, Z},'Size',[1 3])
 
 <img width="782" height="219" alt="image" src="https://github.com/user-attachments/assets/f99fff45-f82c-49b7-bb92-8e2d9823d984" />
 
-
+Notes:
+Image appears darker and less visually meaningful when using rgb2xyz() as the images are divided into their channels. The Y channel represents luminance and resembles a grayscale image with clear structural details, while the X and Z channels contain chromatic information
 
