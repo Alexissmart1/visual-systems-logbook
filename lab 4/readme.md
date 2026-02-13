@@ -193,16 +193,6 @@ montage({I, BW, BW_clean, B});
 
 ## Task 4 - Function bwmorph - thinning and thickening
 
-Matlab's Image Processing Toolbox includes a general morphological function *_bwmorph_* which implements a variety of morphological operations based on combinations of dilations and erosions.  The calling syntax is:
-
-```
-g = bwmorph(f, operations, n)
-```
-where *_f_* is the input binary image, *_operation_* is a string specifying the desired operation, and *_n_* is a positive integer specifying the number of times the operation should be repeated. (n = 1 if omitted.)
-
-The morphological operations supported by _bwmorph_ are:
-
-<p align="center"> <img src="assets/bwmorph.jpg" /> </p>
 
 To test function *_bwmorph_* on thinning operation, do the following:
 
@@ -213,7 +203,35 @@ To test function *_bwmorph_* on thinning operation, do the following:
 
 What will happen if you keep thinning the image?  Try thinning with *_n = inf_*.  (_inf_ is reserved word in Matlab which means infinity.  However, for _bwmorph_, it means repeat the function until the image stop changing.)
 
-Modify your matlab code so that the fingerprint is displayed black lines on white background instead of white on black.  What conclusion can you draw about the relationship between thinning and thickening?
+```
+clear all
+close all
+f = imread('fingerprint.tif');
+I = imcomplement(f);
+level = graythresh(I);
+BW = imbinarize(I, level);
+
+g1 = bwmorph(BW, 'thin', 1);
+g2 = bwmorph(BW, 'thin', 2);
+g3 = bwmorph(BW, 'thin', 3);
+g4 = bwmorph(BW, 'thin', 4);
+g5 = bwmorph(BW, 'thin', 5);
+ginf = bwmorph(BW, 'thin', inf);
+montage({f,BW, g1, g2, g3, g4, g5, ginf});
+```
+
+<img width="767" height="452" alt="image" src="https://github.com/user-attachments/assets/443e34a3-ab14-4685-a30b-cc3d69b4785c" />
+
+Notes: We can see that thinning the image reduces the width of the ridges in the fingerprint while trying not to worsen gaps. This process continues when we infinitly preform the process and the fingerprint vanishes. 
+
+> Modify your matlab code so that the fingerprint is displayed black lines on white background instead of white on black.  What conclusion can you draw about the relationship between thinning and thickening?
+
+```
+BW = imcomplement(BW);
+```
+<img width="767" height="452" alt="image" src="https://github.com/user-attachments/assets/3f684877-ad92-4de5-97e4-134215f80ec2" />
+
+Notes: Thinning reduces the foreground while preserving connections. However if the image is inverted, thinning  corresponds to thickening the original structures.
 
 ## Task 5 - Connected Components and labels
 
