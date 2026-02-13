@@ -133,9 +133,7 @@ Morphological method is superior with a sharper image with less noise and better
 
 ## Task 3 - Boundary detection 
 
-The grayscale image 'blobs.tif' consists of blobs or bubbles of different sizes in a sea of noise. Further, the bubbles are dark, while the background is white.  The goal of this task is to find the boundaries of the blobs using the boundary operator (Lecture 6, slide 17).
-
-<p align="center"> <img src="assets/blobs.jpg" /> </p>
+The grayscale image 'blobs.tif' consists of blobs or bubbles of different sizes in a sea of noise. Further, the bubbles are dark, while the background is white.  The goal of this task is to find the boundaries of the blobs using the boundary operator 
 
 First we turn this "inverted" grayscale image into a binary image with white objects (blobs) and black background. Do the following:
 
@@ -147,13 +145,51 @@ I = imcomplement(I);
 level = graythresh(I);
 BW = imbinarize(I, level);
 ```
-The Matlab function  _graythresh_ computes a global threshold _level_ from the grayscale image I, by finding a threshold that minimizes the variance of the thresholded black and white pixels. (This method is known as the [Otsu's method](https://cw.fel.cvut.cz/b201/_media/courses/a6m33bio/otsu.pdf).)  The function *_imbinarize_* turns the grayscale image to a binary image **BW**: those pixels above or equal to _level_ are made foreground (i.e. 1), otherwise they are background (0).
 
 Now, use the boundary operation to compute the boundaries of the blobs. This is achieved by eroding BW  with SE, where SE is a 3x3 elements of 1's. The eroded image is subtract from BW. 
 
 Diplay as montage {I, BW, erosed BW and boundary detected image}.  Comment on the result.
 
-How can you improve on this result?
+```
+clear all
+close all
+I = imread('blobs.tif');
+I = imcomplement(I);
+level = graythresh(I);
+BW = imbinarize(I, level);
+SE = strel('square',3)
+BWe = imerode(BW, SE);
+B = BW - BWe;
+montage({I, BW, BWe, B});
+```
+
+<img width="905" height="833" alt="image" src="https://github.com/user-attachments/assets/68f97321-fa1e-4e6a-8542-97f8fc4bf455" />
+
+Notes: I: image is now inverted, blobs are bright and background is dark
+BW: Otsu method threshold improves image segmentation, but there is still noise
+BWe: Foreground boundaries are eroded, blobs have shrunk and noise is reduced
+Boundary image: outlines of the blobs are visable as well as the origional image noise
+
+> How can you improve on this result?
+
+The result could be improved by using a Morphological Open and close process to remove noise and then use an erode process to generate the blob boundaries 
+
+```
+clear all
+close all
+I = imread('blobs.tif');
+I = imcomplement(I);
+level = graythresh(I);
+BW = imbinarize(I, level);
+SE = strel('square',3)
+BW_clean = imopen(BW, SE);
+BW_clean = imclose(BW_clean, SE);
+BW_er = imerode(BW_clean, SE);
+B = BW_clean - BW_er;
+montage({I, BW, BW_clean, B});
+```
+
+<img width="905" height="833" alt="image" src="https://github.com/user-attachments/assets/a042eda4-da0e-4a43-bc5e-24af6e104bc5" />
 
 ## Task 4 - Function bwmorph - thinning and thickening
 
