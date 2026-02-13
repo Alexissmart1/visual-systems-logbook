@@ -358,6 +358,10 @@ montage({f, gd, ge, gg}, 'size', [2 2])
 ```
 Comments on the results.
 
+<img width="1434" height="1375" alt="image" src="https://github.com/user-attachments/assets/a23f1b51-7dca-4ddf-8694-354fb994df90" />
+
+Notes: We can see the dilate process thickens the white parts of the image of the skull and the dark areas shrink, then with the erode process these white areas shrink compared to the original image and the dark areas are enlarged. When creating a difference image between dilation and erosion it creates a border around the sudden changes in intensity within the image, this acts as an edge detector for parts of the image
+
 ## Challenges
 
 You may like to attemp one or more of the following challenges. Unlike tasks in this Lab where you were guided with clear instructions, you are required to find your solutions yourself based on what you have learned so far.  
