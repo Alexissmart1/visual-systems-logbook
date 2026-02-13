@@ -368,9 +368,66 @@ You may like to attemp one or more of the following challenges. Unlike tasks in 
 
 1. The grayscale image file _'assets/fillings.tif'_ is a dental X-ray corrupted by noise.  Find how many fills this patient has and their sizes in number of pixels.
 
+```
+f = imread('assets/fillings.tif');
+f = im2gray(f);
+
+% Stretch only the upper intensity range
+f_adj = imadjust(f, stretchlim(f, [0.85 1]));
+
+BW = imbinarize(f_adj);
+
+% Noise removal 
+BW = bwareaopen(BW, 200);        
+BW = imfill(BW, 'holes');   
+
+% Filling smoothing
+BW = imclose(BW, strel('disk',4));
+
+% Connected components 
+CC = bwconncomp(BW, 8);
+numFillings = CC.NumObjects;
+numPixels = cellfun(@numel, CC.PixelIdxList);
+
+imshow(BW)
+disp('Number of fillings:');
+disp(numFillings');
+disp('Pixel size of each filling:');
+disp(numPixels');
+
+```
+
+Output:
+
+```
+Number of fillings:
+2
+Pixel size of each filling:
+11937
+7521
+```
+
+<img width="1146" height="819" alt="image" src="https://github.com/user-attachments/assets/78874dc8-151d-4efe-88e7-4d8b0eb06fa7" />
+
 2. The file _'assets/palm.tif'_ is a palm print image in grayscale. Produce an output image that contains the main lines without all the underlining non-characteristic lines.
 
-3. The file _'assets/normal-blood.png'_ is a microscope image of red blood cells. Using various techniques you have learned, write a Matlab .m script to count the number of red blood cells.
+```
+clear all
+close all
+I = imread('palm.tif');
+I = imcomplement(I);
+level = graythresh(I);
+BW = imbinarize(I, level);
+SE = strel('disk',5)
+BW = bwareaopen(BW, 5);       
+BW = imclose(BW, SE);
+montage({I, BW, });
+```
+
+<img width="1202" height="609" alt="image" src="https://github.com/user-attachments/assets/84655b2e-a2d4-44b9-b614-162ffc87efcc" />
+
+
+4. The file _'assets/normal-blood.png'_ is a microscope image of red blood cells. Using various techniques you have learned, write a Matlab .m script to count the number of red blood cells.
 
 ---
 ## DRAW Week Assessment
