@@ -39,6 +39,9 @@ end
 end
 ```
 
+<img width="578" height="340" alt="image" src="https://github.com/user-attachments/assets/a328fc4d-c4ff-42b9-968a-08ac1a33f7c8" />
+
+
 # Task 2
 
 ```
@@ -83,3 +86,5 @@ for y = 1:height
 end
 end
 ```
+
+<img width="578" height="340" alt="image" src="https://github.com/user-attachments/assets/26ea515f-d52c-4039-91ba-16e315f6a47d" />
