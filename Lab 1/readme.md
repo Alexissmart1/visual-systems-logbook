@@ -1,6 +1,20 @@
 # Lab 1
 
-# Task 1
+# Task 1 - Image Rotation
+
+The Requirement:
+
+You are required to write a function which rotates a grey scale image by theta degrees radian
+
+Note the following:
+
+The resulting image should be the same size as the original. (i.e. the matrix storing the image should have the same dimensions, so some clipping of the image may occur).
+
+If a source pixel lies outside the image you should paint it black.
+
+Use “nearest pixel” only: for example if the source pixel required is (34.43,46.667) you should use the pixel at the location (34,47) in the source image.
+
+The rotation should be performed about the centre of the image.
 
 ```
 load clown 
@@ -42,7 +56,23 @@ end
 <img width="578" height="340" alt="image" src="https://github.com/user-attachments/assets/a328fc4d-c4ff-42b9-968a-08ac1a33f7c8" />
 
 
-# Task 2
+# Task 2 - Image Shearing
+
+The Requirement:
+
+You are required to write a function which shears the input image in both the x and y direction and centres the result
+
+Note the following:
+
+The resulting image should be the same size as the original. (i.e. the matrix storing the image should have the same dimensions, so some clipping of the image may occur).
+
+If a source pixel lies outside the image you should paint it black.
+
+Use “nearest pixel” only, as before.
+
+You should centre the sheared result (i.e. the centre pixel of the image remains stationary).
+
+The shear values (Xshear, and Yshear) should be expressed as fractions of the images width and height respectively.
 
 ```
 load clown
