@@ -395,3 +395,25 @@ montage({f, gradmag, BW}, "Size", [1 3]);
 <img width="1232" height="348" alt="image" src="https://github.com/user-attachments/assets/8ebb4818-f9cb-4500-8132-461f7b045652" />
 
 * _office.jpg_ is a colour photograph taken of an office with badd exposure.  Use whatever means at your disposal to improve the lighting and colour of this photo.
+
+```
+clear; close all; clc
+
+f = imread('office.jpg');
+f = im2double(f);
+
+% Gamma Correction
+g_gamma = imadjust(f, [], [], 0.5); 
+
+% Histogram Equalization
+h = histeq(g_gamma, 256);
+
+% Contrast Adjustment
+g_contrast = imadjust(h, stretchlim(h), []);
+
+figure;
+montage({f, g_contrast});
+```
+
+<img width="1232" height="439" alt="image" src="https://github.com/user-attachments/assets/fd27d9c5-6aed-4e12-854b-bbeb3551cf62" />
+
