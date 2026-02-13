@@ -427,7 +427,37 @@ montage({I, BW, });
 <img width="1202" height="609" alt="image" src="https://github.com/user-attachments/assets/84655b2e-a2d4-44b9-b614-162ffc87efcc" />
 
 
-4. The file _'assets/normal-blood.png'_ is a microscope image of red blood cells. Using various techniques you have learned, write a Matlab .m script to count the number of red blood cells.
+3. The file _'assets/normal-blood.png'_ is a microscope image of red blood cells. Using various techniques you have learned, write a Matlab .m script to count the number of red blood cells.
+
+```
+clear; close all; clc
+
+f = imread('assets/normal-blood.png');
+
+G = rgb2gray(f);
+G = imcomplement(G);
+G2 = imadjust(G);
+
+level = graythresh(G2);
+BW = imbinarize(G2, level);
+BW = imfill(BW, 'holes');
+
+CC = bwconncomp(BW, 8);
+numCells = CC.NumObjects;
+
+fprintf('Number of red blood cells detected: %d\n', numCells);
+
+montage({f,G,G2,BW})
+```
+
+<img width="1202" height="793" alt="image" src="https://github.com/user-attachments/assets/a5c7ec3c-43c1-4203-bf33-c4c294c08afc" />
+
+Output:
+```
+Number of red blood cells detected: 43
+```
+
+Note: Improvements could be made to separate the blood cells by enhancing the low intensity pixels on overlapping cell boundaries to create a more distinct cell boundry
 
 ---
 ## DRAW Week Assessment
