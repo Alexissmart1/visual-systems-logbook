@@ -239,7 +239,8 @@ In processing and interpreting an image, it is often required to find objects in
 
 Below is a text image containing many characters.  The goal is to find the **largest connected component** in this image, and then **erase it**.
 
-<p align="center"> <img src="assets/text.png" /> </p>
+<img width="256" height="256" alt="image" src="https://github.com/user-attachments/assets/4749c028-6ad8-489d-89e9-582804aacb66" />
+
 
 This sounds like a very complex task. Fortunately Matlab provides in their Toolbox the function _bwconncomp_ which performs the morphological operation described in Lecture 6 slides 22 - 24. Try the following Matlab script:
 
@@ -249,9 +250,20 @@ imshow(t)
 CC = bwconncomp(t)
 ```
 
-*_CC_* is a data structure returned by *_bwconncomp_* as described below.
+Output:
 
-<p align="center"> <img src="assets/cc.jpg" /> </p>
+```
+CC = struct with fields:
+    Connectivity: 8
+       ImageSize: [256 256]
+      NumObjects: 88
+    PixelIdxList: {1×88 cell}
+```
+
+CC is a data structure returned by bwconncomp as described below.
+
+<img width="924" height="342" alt="image" src="https://github.com/user-attachments/assets/87f20660-7754-4b60-b11b-75106935e78a" />
+
 
 To determine which is the largest component in the image and then erase it (i.e. set all pixels within that componenet to 0), do this:
 
@@ -273,6 +285,11 @@ These few lines of code introduce you to some cool features in Matlab.
 4. The **_max_** function returns the maximum value in numPixels and its index in the array.
 
 5. Once this index is found, we have identified the largest connect component.  Using this index information, we can retrieve the list of pixel coordinates for this component in **_CC.PixelIdxList_**.
+
+Output:
+
+<img width="515" height="396" alt="image" src="https://github.com/user-attachments/assets/237cfd63-1a28-4f7c-a6ef-1ec7412ccae2" />
+
 
 ## Task 6 - Morphological Reconstruction
 
@@ -303,6 +320,13 @@ montage({f, g, fo, fr}, "size", [2 2])
 
 Comment on what you observe from these four images.
 
+<img width="1336" height="1375" alt="image" src="https://github.com/user-attachments/assets/56be277f-512e-4ab8-a4de-4ad21dbfcc77" />
+
+Notes: f: The original text image with white text of many different characters on black background.
+g: applies an errosion with the 17,1 marker. This removes all characters and those that are 17 pixels tall are replaced with a dot
+fo: This opening process restores the vertical line on the SE on characters that are 17 pixels tall, this gives the image many lines of varying thicknesses depending on the character
+fr: This uses g as a marker and restores characters that were present after erosion to their original shape. This is much better than fo as original detail is remained from the desired characters
+
 Also try the function **_imfill_**, which will fill the holes in an image (Lecture 6 slides 19-21).
 
 ```
@@ -310,6 +334,10 @@ ff = imfill(f);
 figure
 montage({f, ff})
 ```
+
+<img width="1336" height="757" alt="image" src="https://github.com/user-attachments/assets/11ff26a1-da3b-4a90-95d7-b98eeb650711" />
+
+Notes: This process has filled in the gaps within characters
 
 ## Task 7 - Morphological Operations on Grayscale images
 
