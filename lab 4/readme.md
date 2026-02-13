@@ -460,11 +460,4 @@ Number of red blood cells detected: 43
 Note: Improvements could be made to separate the blood cells by enhancing the low intensity pixels on overlapping cell boundaries to create a more distinct cell boundry
 
 ---
-## DRAW Week Assessment
----
 
-The first half of this module is assessed on your effort in completing Lab 1 to Lab 4.  This is done through your repo or "logbook", which should record what you have done in Lab 1 to Lab 4, including explanations and reflections on observations.  
-
-This assessment accounts for 15% of the module.  The preferred route of submitting your logbook is through GitHub, but you may use other tools such as Notion or Obsidian.  You must complete the [SURVEY](https://forms.cloud.microsoft/e/mgcDRn9QdM) and grant me access to them.  My GitHub account name is 'pykc'.
-
-The deadline for this is **16.00 on Friday 13 February 2026**.  
