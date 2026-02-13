@@ -346,6 +346,52 @@ title('Original | Contrast-enhanced | Laplacian | Sobel | Unsharp')
 
 * Improve the contrast of a lake and tree image store in file _lake&tree.png_ use any technique you have learned in this lab. Compare your results with others in the class.
 
+```
+clear; close all; clc
+
+f = imread('lake&tree.png');
+
+% Gamma correction
+g = imadjust(f, [], [], 0.7);
+
+% Histogram equalization
+h = histeq(f, 256);
+
+% Contrast-stretch
+r = double(f);  % uint8 to double conversion
+k = mean2(r);   % find mean intensity of image
+E = 5;
+s = 1 ./ (1.0 + (k ./ (r + eps)) .^ E);
+c = uint8(255*s);
+
+montage({f, g, h, c}, "Size", [2 2]);
+title('Original | gamma correction | Histogram equalization | contrast-stretch')
+```
+
+<img width="1084" height="1375" alt="image" src="https://github.com/user-attachments/assets/28ee2a96-81ac-4776-8fc7-efff3d5e49dc" />
+
+
 * Use the Sobel filter in combination with any other techniques, find the edge of the circles in the image file _circles.tif_.  You are encouraged to discuss and work with your classmates and compare results.
+
+```
+clear; close all; clc
+
+f = imread('circles.tif');
+f = im2double(f);
+
+% Sobel filter
+w_sobel = fspecial('sobel');
+gx = imfilter(f, w_sobel, 0);   
+gy = imfilter(f, w_sobel', 0);    
+gradmag = sqrt(gx.^2 + gy.^2);
+
+level = graythresh(gradmag);
+BW = imbinarize(gradmag, level);
+
+figure
+montage({f, gradmag, BW}, "Size", [1 3]);
+```
+
+<img width="1232" height="348" alt="image" src="https://github.com/user-attachments/assets/8ebb4818-f9cb-4500-8132-461f7b045652" />
 
 * _office.jpg_ is a colour photograph taken of an office with badd exposure.  Use whatever means at your disposal to improve the lighting and colour of this photo.
