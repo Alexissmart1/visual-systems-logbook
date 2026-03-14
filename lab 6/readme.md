@@ -19,9 +19,55 @@ The second command returns the values: 1, 4, 7, 10.
 
 Matlab provides a proper image resizign function **_imresize(I, scale)_** where I is the input image and scale is the factor to resize.  So 0.5 means the image is reduced by a factor of 2. This function first filter the image by a lowpass filter (Gaussian) that removes the high frequency components before subsampling by skipping pixels.  This prevents aliasing and the introdduction of artifacts.
 
+```
+clear all; close all;
+f = imread('assets/cafe_van_gogh.jpg');
+
+%% Subsampling
+f2  = f(1:2:end, 1:2:end, :);    % 1/2
+f4  = f(1:4:end, 1:4:end, :);    % 1/4
+f8  = f(1:8:end, 1:8:end, :);    % 1/8
+f16 = f(1:16:end, 1:16:end, :);  % 1/16
+f32 = f(1:32:end, 1:32:end, :);  % 1/32
+
+figure(1);
+montage({f, f2, f4, f8, f16, f32}, 'Size', [2 3]);
+ax = gca;
+ax.Position = [0.05 0.02 0.9 0.88];  % shrink axes to leave room for title
+title('Naive subsampling: 1x, 1/2, 1/4, 1/8, 1/16, 1/32');
+
+%% Resizing with imresize
+r2  = imresize(f, 1/2);
+r4  = imresize(f, 1/4);
+r8  = imresize(f, 1/8);
+r16 = imresize(f, 1/16);
+r32 = imresize(f, 1/32);
+
+figure(2);
+montage({f, r2, r4, r8, r16, r32}, 'Size', [2 3]);
+ax = gca;
+ax.Position = [0.05 0.02 0.9 0.88];  % shrink axes to leave room for title
+title('imresize: 1x, 1/2, 1/4, 1/8, 1/16, 1/32');
+
+%% Side-by-side comparison at 1/8 scale 
+figure(3);
+montage({f8, r8}, 'Size', [1 2]);
+ax = gca;
+ax.Position = [0.05 0.02 0.9 0.88];  % shrink axes to leave room for title
+title('1/8 scale — Subsampling (left) vs imresize (right)');
+```
+
+<p align="center"> <img src="assets/Task6.png" /> </p>
+
 >Repeat the above exercise by adding code to properly resize the image with the **_imresize_** function.
 
+<p align="center"> <img src="assets/Task6.1.png" /> </p>
+
 Compare the results from the two approach to subsampling.
+
+<p align="center"> <img src="assets/Task6.2.png" /> </p>
+
+Note: while the subsampling technique produces a sharper result, the imresize version is more recognisable at lower resolutions even if it is blurry
 
 ## Task 2: Pattern Matching with Normalized Cross Correlation
 
