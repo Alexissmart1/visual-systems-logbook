@@ -210,6 +210,53 @@ You have used Otsu's method to perform thresholding using the function **_grayth
 
 You will find in the *_assets_* folder the image file *_'yeast_cells.tif'_*. Use Otu's method to segment the image into background and yeast cells.  Find an alternative method to allow you separating those cells that are 'touching'. (See Lecture 9, slide 9.)
 
+```
+f = imread('assets/yeast-cells.tif');
+figure(1);
+
+%% Otsu (single threshold) 
+T_otsu = graythresh(f);                 
+g_otsu = imbinarize(f, T_otsu);
+fprintf('Otsu threshold: %d (of 255)\n', round(T_otsu*255));
+
+%% Otsu (dual thresholds) 
+thresholds = multithresh(f, 2);          
+fprintf('dual thresholds: %d, %d\n', thresholds(1), thresholds(2));
+
+% Quantize into 3 levels: background=0, body=128, core=255
+g_multi = imquantize(f, thresholds, [0 128 255]);
+g_multi = uint8(g_multi);
+
+% Also create a binary of just the cells (above lower threshold)
+g_multi_bin = f > thresholds(1);
+
+%% Local thresholding 
+% For each pixel, compute local mean and std in a window,
+% then threshold using T_xy = a*sigma_xy + b*mean_xy
+
+[M, N] = size(f);
+f_double = double(f);
+w = 51;                        
+half_w = floor(w/2);
+
+local_mean = imfilter(f_double, ones(w)/(w*w), 'symmetric');
+local_sq   = imfilter(f_double.^2, ones(w)/(w*w), 'symmetric');
+local_std  = sqrt(max(local_sq - local_mean.^2, 0));
+
+a = 1.2; % weight for local std deviation
+b = 0.5; % weight for local mean
+T_local = a * local_std + b * local_mean;
+
+g_local = uint8(f_double >= T_local) * 255;
+
+figure(1);
+montage({f, g_otsu, g_multi, g_local}, 'Size', [1 4]);
+title('Original | Otsu | Dual Otsu | Local Threshold');
+```
+
+<p align="center"> <img src="assets/Task4.png" /> </p>
+
+
 ## Task 5 - Segmentation by k-means clustering
 
 In this task, you will learn to apply k-means clustering method to segment an image.  
