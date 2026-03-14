@@ -198,8 +198,12 @@ hold off;
 
 The code above finds the _Nbest_ features using SIFT in each iage and overlay the features as cicles onto the image.
 
+<p align="center"> <img src="assets/Task4.png" /> </p>
+<p align="center"> <img src="assets/Task4.1.png" /> </p>
+
 >How successful do you think SIFT has managed to detect features for these two images (one is a quarter of the size of the other)?  What conclusions can you make?
 
+Note: The detection has done a good job at detecting most of the features on both of the images. While the scaling across both images is mostly consistant, there are some features that arnt picked up in the smaller image due to the selected strength. However overall scaling doesnt seem to affect this function too much. 
 
 ## Task 4: SIFT matching - scale and rotation invariance
 
