@@ -52,6 +52,8 @@ The function *_edge_* allows the user to specify one or more threshold values wi
 
 Repeat the edge detection exercise with different threshold to get the best results you can for these two images.
 
+<p align="center"> <img src="assets/Task2.png" /> </p>
+
 
 ## Task 3 - Hough Transform for Line Detection
 
