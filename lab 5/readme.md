@@ -132,12 +132,18 @@ plot(x,y,'o','color','red', 'MarkerSize',10, 'LineWidth',1);
 
 > Explore the contents of array *_peaks_* and relate this to the Hough image with the overlay red circles.
 
-
+rho, theta
 528	147
+
 564	147
+
 550	147
+
 592	147
+
 518	147
+
+We can see that all 5 peaks share the same theta of 147 so they are parallel within the image, the differing rho value suggests they are at different perpendicular distances from the origin. 
 
 #### Step 4: Explore the peaks in the Hough Image
 It can be insightful to take a look at the Hough Image in a different way.  Try this:
@@ -174,6 +180,9 @@ The function **_houghlines( )_** returns arrays of lines, which is a structure i
 The start and end coordinates of each line segment is used to define the starting and ending point of the line which is plotted as overlay on the image.
 
 > How many line segments are detected? Why it this not 5, the number of peaks found?
+
+The function houghlines returns more than one segment per peak. This means that it finds all collinear segments that were detected along each line, a peak may correspond to many disconnected segments along a line. The MinLength function discards segments that are shorter than 7 pixels and FillGap will merge segments that are within 5 pixels. 
+
 > Explore how you may detect more lines and different lines (e.g. those orthogonal to the ones detected).
 
 > Optional: Matlab also provides the function **_imfindcircles( )_**, which uses Hough Transform to detect circles instead of lines.  You are left to explore this yourself.  You will find two relevant image files for cicle detection: *_'circles.tif'_* and *_eight.png_* in the *_assets_* folder.
