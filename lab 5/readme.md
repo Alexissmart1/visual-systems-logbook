@@ -354,6 +354,7 @@ This image is  suitable for watershed algorithm because touch dowels will often 
 
 Read the image and produce a cleaned version of binary image having the dowels as foreground and cloth underneath as background.  Note how morophological operations are used to reduce the "noise" in grayscale image.  The "noise" is the result of thresholding on the pattern of the wood.
 
+
 ```
 % Watershed segmentation with Distance Transform
 clear all; close all;
@@ -364,7 +365,10 @@ g = bwmorph(g, "open", 1);
 montage({I,g});
 title('Original & binarized cleaned image')
 ```
+<p align="center"> <img src="assets/Task6.png" /> </p>
+
 Instead of applying watershed transform on this binary image directly, a technique often used with watershed is to first calculate the distance transform of this binary image. The distance transform is simply the distance from every pixel to the nearest nonzero-valued (foreground) pixel.  Matlab provides the function **_bwdist( )_** to return an image where the intensity is the distance of each pixel to the nearest foreground (white) pixel.  
+
 
 ```
 % calculate the distance transform image
@@ -374,7 +378,11 @@ figure(2)
 imshow(D,[min(D(:)) max(D(:))])
 title('Distance Transform')
 ```
-> Why do we perform the distance transform on gc and not on g?   
+<p align="center"> <img src="assets/Task6.1.png" /> </p>
+
+> Why do we perform the distance transform on gc and not on g?
+
+Note: we perform the distance transform on imcomplementg since bwdist computes the distance from each pixel to the nearest white nonezero pixel. If we performed this directly to g then every white pixel would already have a distance of 0 given that the foreground is white. Then the background pixels would increase in distance. Complementing first allows the background to be white and the foreground to be black. This allows the centre of each dowel to be given the highest value as its furthest from an edge. 
 
 Note that the **_imshow_** function has a second parameter which stretches the distance transform image over the full range of the grayscale.
 
@@ -387,7 +395,11 @@ figure(3)
 imshow(L, [0 max(L(:))])
 title('Watershed Segemented Label')
 ```
-> Make sure you understand the image presented. Why is this appears as a grayscale going from dark to light from left the right? 
+<p align="center"> <img src="assets/Task6.5.png" /> </p>
+
+> Make sure you understand the image presented. Why is this appears as a grayscale going from dark to light from left the right?
+
+The watershed function produces a matrix where each segmented region is given a unique value and the ridges are given 0. The labels are assigned in order as the algorithm scans the image and then intensity is mapped linearly from the label value. The left side is generated first and this is given a low value and therefore a low intensity. 
 
 ```
 % Merge everything to show segmentation
@@ -397,7 +409,16 @@ figure(4)
 montage({I, g, W, g2}, 'size', [2 2]);
 title('Original Image - Binarized Image - Watershed regions - Merged dowels and segmented boundaries')
 ```
+<p align="center"> <img src="assets/Task6.3.png" /> </p>
 > Explain the montage in this last step.
+
+Original image: The greyscale photograph of dowels on cloth. With some dowels touching each other.
+
+Binarized image: After thresholding and morphological cleaning. Dowels are white, background is black. However touching dowels are merged into single connected segment.
+
+Watershed boundaries: These are the ridge lines that were extracted from the watershed function. Thin lines separate the dowels through the entire image, through the connecting points of the dowels. each dowel has its own region.
+
+Merged result: This is the combination of the binarized dowels and the watershed boundaries. The watershed ridge lines are now overlaid onto the binary image as white lines cutting through the dowel regions. 
 
 ## Challenges
 
