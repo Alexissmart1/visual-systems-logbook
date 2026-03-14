@@ -88,6 +88,8 @@ montage({f,fEdge})
 ```
 This is the same image as that used in Task 2, but rotated by 33 degrees.
 
+<p align="center"> <img src="assets/Task3.png" /> </p>
+
 #### Step 2: Do the Hough Transform
 Now perform the Hough Transform with the function *_hough( )_* which has the format:
 ```
@@ -110,6 +112,8 @@ axis on, axis normal, hold on;
 
 The image, which I shall called the **_Hough Image_**, correspond to the counts in the Hough transform parameter domain with the intensity representing the count value at each bin.  The brighter the point, the more edge points maps to this parameter.  Therefore all edge points on a straight line will map to this parameter bin and increase its brightness.
 
+<p align="center"> <img src="assets/Task3.1.png" /> </p>
+
 #### Step 3: Find peaks in Hough Image
 Matlab  provides a special function **_houghpeaks_** which has the format:
 ```
@@ -130,18 +134,17 @@ x = theta(peaks(:,2)); y = rho(peaks(:,1));
 plot(x,y,'o','color','red', 'MarkerSize',10, 'LineWidth',1);
 ```
 
+<p align="center"> <img src="assets/Task3.2.png" /> </p>
+
 > Explore the contents of array *_peaks_* and relate this to the Hough image with the overlay red circles.
 
 rho, theta
-528	147
 
-564	147
-
-550	147
-
-592	147
-
-518	147
+1. 528	147
+2. 564	147
+3. 550	147
+4. 592	147
+5. 518	147
 
 We can see that all 5 peaks share the same theta of 147 so they are parallel within the image, the differing rho value suggests they are at different perpendicular distances from the origin. 
 
@@ -157,6 +160,8 @@ ylabel('rho','FontSize',16)
 zlabel('Hough Transform counts','FontSize',16)
 ```
 You will see a plot of the Hough counts in the parameter space as a 3D plot instead of an image.  You can use the mouse (or track pad) to rotate the plot in any directions and have a sense of where the peaks occurs.  The **_houghpeak_** function simply search this profile and fine the highest specified number of peaks.  
+
+<p align="center"> <img src="assets/Task3.3.png" /> </p>
 
 ### Step 5: Fit lines into the image
 
@@ -179,11 +184,22 @@ The function **_houghlines( )_** returns arrays of lines, which is a structure i
 
 The start and end coordinates of each line segment is used to define the starting and ending point of the line which is plotted as overlay on the image.
 
+<p align="center"> <img src="assets/Task3.6.png" /> </p>
+
 > How many line segments are detected? Why it this not 5, the number of peaks found?
 
-The function houghlines returns more than one segment per peak. This means that it finds all collinear segments that were detected along each line, a peak may correspond to many disconnected segments along a line. The MinLength function discards segments that are shorter than 7 pixels and FillGap will merge segments that are within 5 pixels. 
+12 line segments were detected. The function houghlines returns more than one segment per peak. This means that it finds all collinear segments that were detected along each line, a peak may correspond to many disconnected segments along a line. The MinLength function discards segments that are shorter than 7 pixels and FillGap will merge segments that are within 5 pixels. 
 
 > Explore how you may detect more lines and different lines (e.g. those orthogonal to the ones detected).
+
+Increasing the numpeaks to a value such as 15 and lowering the threshold in houghpeaks, allows weaker peaks to be found.
+
+```
+peaks  = houghpeaks(H,15,'threshold',ceil(0.3*max(H(:))));
+```
+<p align="center"> <img src="assets/Task3.5.png" /> </p>
+
+<p align="center"> <img src="assets/Task3.4.png" /> </p>
 
 > Optional: Matlab also provides the function **_imfindcircles( )_**, which uses Hough Transform to detect circles instead of lines.  You are left to explore this yourself.  You will find two relevant image files for cicle detection: *_'circles.tif'_* and *_eight.png_* in the *_assets_* folder.
 
