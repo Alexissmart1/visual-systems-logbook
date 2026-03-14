@@ -52,7 +52,22 @@ The function *_edge_* allows the user to specify one or more threshold values wi
 
 Repeat the edge detection exercise with different threshold to get the best results you can for these two images.
 
-<p align="center"> <img src="assets/Task2" /> </p>
+```
+f = imread('assets/brain_tumor.jpg');
+[g1, t] = edge(f, 'sobel', 0.03);
+[g2, t] = edge(f, 'log', 0.003, 2);
+[g3, t] = edge(f, 'canny', [0.02 0.20], 1.5);
+montage({f, g1, g2, g3}, 'Size',[1,4]);
+title('Parameters: Original | Sobel-0.03| LoG-0.003, 2 | Canny-[0.02 0.2], 1.5');
+```
+
+<p align="center"> <img src="assets/Task2.png" /> </p>
+
+<p align="center"> <img src="assets/Task2.1.png" /> </p>
+
+<p align="center"> <img src="assets/Task2.3.png" /> </p>
+
+<p align="center"> <img src="assets/Task2.2.png" /> </p>
 
 
 ## Task 3 - Hough Transform for Line Detection
