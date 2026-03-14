@@ -159,6 +159,14 @@ Metric: the strength of the keypoint. Higher values mean more distinctive featur
 
 > Explore  other methods of feature detection provided by Matlab provided in their toolboxes.
 
+```
+pts_surf   = detectSURFFeatures(f);
+pts_kaze   = detectKAZEFeatures(f);
+pts_orb    = detectORBFeatures(f);
+pts_brisk  = detectBRISKFeatures(f);
+pts_harris = detectHarrisFeatures(f);
+```
+
 <p align="center"> <img src="assets/Task3.2.png" /> </p>
 
 ## Task 4: SIFT matching
