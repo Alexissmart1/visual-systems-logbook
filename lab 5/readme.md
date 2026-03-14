@@ -132,6 +132,13 @@ plot(x,y,'o','color','red', 'MarkerSize',10, 'LineWidth',1);
 
 > Explore the contents of array *_peaks_* and relate this to the Hough image with the overlay red circles.
 
+
+528	147
+564	147
+550	147
+592	147
+518	147
+
 #### Step 4: Explore the peaks in the Hough Image
 It can be insightful to take a look at the Hough Image in a different way.  Try this:
 
