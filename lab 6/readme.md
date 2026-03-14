@@ -131,14 +131,35 @@ figure(1); imshow(I);
 hold on;
 plot(points.selectStrongest(100));
 ```
+
+<p align="center"> <img src="assets/Task3.png" /> </p>
+
 >Comment on the results.
->Explore and explain the contents of the data structure *_points_*. 
+
+Scale-Invariant Feature Transform (SIFT) algorithm is used to find local features in an image. These are features that can be found again even if the image is transformed. They are points that are distinctive or repeatable. The size of the circle surrounding the points in our image represent the detail of the structure and what scale it was fould at. 
+
+>Explore and explain the contents of the data structure *_points_*.
 
 You may want to consult this [Matlab page](https://uk.mathworks.com/help/vision/ref/siftpoints.html) about SIFT Interesting Points.
 
+The points data structure consists of:
+
+Location: a matrix of pixel coordinates for each keypoint. This is where the feature is in the image.
+
+Scale: the characteristic scale at which the feature was detected. Displayed as the radius of the circle in the plot. Larger circles mean the feature was found at a coarser scale and corresponds to a larger image structure.
+
+Orientation: the dominant gradient direction at the keypoint. Displayed as the small line extending from the centre of each circle.
+
+Metric: the strength of the keypoint. Higher values mean more distinctive features. 
+
+
 >Find the SIFT points for the image **_'cafe_van_gogh.jpg'_**.
->
+
+<p align="center"> <img src="assets/Task3.1.png" /> </p>
+
 > Explore  other methods of feature detection provided by Matlab provided in their toolboxes.
+
+<p align="center"> <img src="assets/Task3.2.png" /> </p>
 
 ## Task 4: SIFT matching
 
