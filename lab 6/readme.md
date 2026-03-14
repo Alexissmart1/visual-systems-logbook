@@ -78,7 +78,7 @@ The following code will compute the NCC function and plot it as a 3D plot:
 ```
 clear all; close all;
 f = imread('assets/salvador_grayscale.tif');
-w = imread('assets/template2.tif');
+w = imread('assets/template1.tif');
 c = normxcorr2(w, f);
 figure(1)
 surf(c)
@@ -86,6 +86,9 @@ shading interp
 ```
 
 >Try this code and explore the NCC plot between the template and the image.  You should be able manually locate the position of the template from the plot. This will be the location where the normalized cross correlation value = 1.0, i.e. an exact match.
+
+<p align="center"> <img src="assets/Task2.2.png" /> </p>
+
 
 Now we want to detect the peak location automatically. This is achieve with:
 
@@ -99,9 +102,19 @@ drawrectangle(gca,'Position', ...
     [xoffSet,yoffSet,size(w,2),size(w,1)], 'FaceAlpha',0);
 ```
 
+<p align="center"> <img src="assets/Task2.3.png" /> </p>
+
+
 >Find out for yourself what the Matlab function **_find( )_** does.  Comment on the results.
->
+
+The find function locates the indicies of array elements what meet a specified condition. In this case the specified condition is the peak of the correlation surface to give a position of best match.
+
 >Test this procedure again with the second template image **_'template2.tif'_**.
+
+<p align="center"> <img src="assets/Task2.png" /> </p>
+
+<p align="center"> <img src="assets/Task2.1.png" /> </p>
+
 
 It is clear that NCC can only match a template to an image if the match is exact or nearly exact.
 
