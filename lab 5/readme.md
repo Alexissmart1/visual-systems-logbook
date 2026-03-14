@@ -140,11 +140,11 @@ plot(x,y,'o','color','red', 'MarkerSize',10, 'LineWidth',1);
 
 rho, theta
 
-1. 528	147
-2. 564	147
-3. 550	147
-4. 592	147
-5. 518	147
+1. 528,	147
+2. 564,	147
+3. 550,	147
+4. 592,	147
+5. 518,	147
 
 We can see that all 5 peaks share the same theta of 147 so they are parallel within the image, the differing rho value suggests they are at different perpendicular distances from the origin. 
 
@@ -197,9 +197,10 @@ Increasing the numpeaks to a value such as 15 and lowering the threshold in houg
 ```
 peaks  = houghpeaks(H,15,'threshold',ceil(0.3*max(H(:))));
 ```
-<p align="center"> <img src="assets/Task3.5.png" /> </p>
 
 <p align="center"> <img src="assets/Task3.4.png" /> </p>
+
+<p align="center"> <img src="assets/Task3.5.png" /> </p>
 
 > Optional: Matlab also provides the function **_imfindcircles( )_**, which uses Hough Transform to detect circles instead of lines.  You are left to explore this yourself.  You will find two relevant image files for cicle detection: *_'circles.tif'_* and *_eight.png_* in the *_assets_* folder.
 
