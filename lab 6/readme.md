@@ -349,8 +349,38 @@ title({char(label), num2str(max(score),2)}); % label object
 ```
 
 > Use the webcam to try to recognize different objects.  Also try to find the accuracy and speed of recogniture for different networks.
->
+
+<p align="center"> <img src="assets/googlenetwatch.png" /> </p>
+
+<p align="center"> <img src="assets/densenetwatch.png" /> </p>
+
+Note: Even though the googlenet Neural Network has a depth of 22 and 7 million parameters, it was more confident in recognising the wrist watch than densenet201 which has a depth of 201 and 20 million parameters. This suggests that the google network could have been trained on images which are more similar to the wrist watch than densenets dataset.  
+
 > Modify this code so that you capture and recognize object in a continous loop.
+
+```
+clear all; close all;
+camera = webcam;
+net = googlenet;
+inputSize = net.Layers(1).InputSize(1:2);
+
+fig = figure;
+while ishandle(fig)              
+    I = snapshot(camera);
+    f = imresize(I, inputSize);
+    
+    tic;
+    [label, score] = classify(net, f);
+    elapsed = toc;
+    
+    image(I);
+    title({char(label), ...
+           sprintf('Score: %.2f  |  FPS: %.1f', max(score), 1/elapsed)}, ...
+           'FontSize', 14);
+    drawnow;                                % force display update
+end
+clear camera;                               % release webcam
+```
 
 You may also want to read and explore these online documents that accompany Matlab:
 
