@@ -221,7 +221,11 @@ The arrays *_points1_* and *_points2_* contains the interest points in the two i
  showMatchedFeatures(f1,f2,matchedPoints1,matchedPoints2);
 ```
 
+<p align="center"> <img src="assets/Task4.2.png" /> </p>
+
 Comment on the results.
+
+The image is filled with yellow lines which are extracting and matching all of the detected points. So much so that the image is unrecognisable
 
 Now replace:
 ```
@@ -231,9 +235,32 @@ with:
 ```
 [features1, valid_points1] = extractFeatures(f1, bestFeatures1);
 ```
+<p align="center"> <img src="assets/Task4.3.png" /> </p>
+
 Comment on the results.
 
+Now the image has far less yellow lines cluttering the image and we can now see the visable features that are being extracted. These are the features with the most unique descriptors. They are being matched to the surrounding larger image with consistant scaling. 
+
 >Next, rotate the smaller image by 20 degrees using the Matlab function **_imrotate( )_** and show that indeed SIFT is rotation invariant.
+
+```
+I2_rot = imrotate(I2, 20);
+f2_rot = im2gray(I2_rot);
+
+points2_rot = detectSIFTFeatures(f2_rot);
+[features2_rot, valid_points2_rot] = extractFeatures(f2_rot, points2_rot);
+[features1_best, valid_points1_best] = extractFeatures(f1, bestFeatures1);
+
+indexPairs_rot = matchFeatures(features1_best, features2_rot, 'Unique', true);
+matchedPts1 = valid_points1_best(indexPairs_rot(:,1), :);
+matchedPts2 = valid_points2_rot(indexPairs_rot(:,2), :);
+
+figure;
+showMatchedFeatures(f1, f2_rot, matchedPts1, matchedPts2);
+title('20° rotation');
+```
+
+<p align="center"> <img src="assets/Task4.4.png" /> </p>
 
 ## Task 5: SIFT vs SURF
 
