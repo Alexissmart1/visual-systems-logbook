@@ -256,6 +256,9 @@ title('Original | Otsu | Dual Otsu | Local Threshold');
 
 <p align="center"> <img src="assets/Task4.png" /> </p>
 
+Otsu threshold: 42 (of 255)
+
+Dual thresholds: 35, 102
 
 ## Task 5 - Segmentation by k-means clustering
 
@@ -276,6 +279,7 @@ xlabel('RED', 'FontSize', 14);
 ylabel('GREEN', 'FontSize', 14);
 zlabel('BLUE', 'FontSize', 14);
 ```
+<p align="center"> <img src="assets/Task5.png" /> </p>
 
 This code reproduces the scatter plot in Lecture 9 slide 12, but in higher resolution.  Each dot and its colour in the plot corresponds to a pixel with it [R G B] vector on the XYZ axes.  The Matlab function **_scatter3( )_** produces the nice 3D plot.  
 The first three inputs R, G and B are the X, Y and Z coordinates. The fourth input '1' is the size of the circle (i.e. a dot!).  The final input  is the colour of each pixel.
@@ -304,7 +308,15 @@ scatter3(centers(:,1),centers(:,2),centers(:,3),100,'black','fill');
 ```
 The last line here superimposes a large black circle at each means colour values in the scatter plot.
 
+k=10
+
+<p align="center"> <img src="assets/Task5.1.png" /> </p>
+
 > Explore the outputs **_L_** and **_centers_** from the segmentation fucntion.  Explore different value of k.
+
+k=46
+
+<p align="center"> <img src="assets/Task5.2.png" /> </p>
 
 Finally, use the label matrix **_L_** to segment the image into the k colours:
 ```
@@ -317,7 +329,22 @@ montage({f,J})
 The Matlab function **_labe2rgb_** turns each element in **_L_** into the segmented colour stored in **_centers_**.
 
 > Explore different value of k and comment on the results.
+
+k=10
+<p align="center"> <img src="assets/Task5.3.png" /> </p>
+
+k=46
+<p align="center"> <img src="assets/Task5.4.png" /> </p>
+
+k=5
+<p align="center"> <img src="assets/Task5.5.png" /> </p>
+
+We can see that the more clusters there are then the more detailed the picture is with more colours, with less clusters, the image is more segmented with fewer colours
+
 > Also, try segmenting the colourful image file 'assets/peppers.png'.
+
+k=6
+<p align="center"> <img src="assets/Task5.6.png" /> </p>
 
 ## Task 6 - Watershed Segmentation with Distance Transform
 
